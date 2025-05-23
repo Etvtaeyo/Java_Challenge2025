@@ -9,22 +9,19 @@ import java.util.regex.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-// 1- Obrigatoriamente é feito o cadastro de um usuário ou médico
-// 2- Passa para o menu do respectivo usuario (medico ou paciente)
-// ** 3- Se o medico quiser marcar consulta mas não tiver usuário cadastrado, ele precisa sair do menu de medico e cadastrar um paciente
-// ** 4- quando o paciente é cadastrado, a consulta pode ser marcada (e o login é unico, ou seja, uma vez que o cadastro foi feito, a unica opção é entrar no menu)
-// OBS: Fazer uma parte de login (validar senha e cpf)
+
 public class Teste {
     static Scanner scanner = new Scanner(System.in);
 
+    ////////// MENU PRINCIPAL //////////
     public static void menuPrincipal(){
         System.out.println("=== BEM VINDO AO HOSPITAL DAS CLÍNICAS ===");
-        System.out.println("--- DESEJA REALIZAR UM CADASTRO DE ---");
         System.out.println("1. PACIENTE");
         System.out.println("2. MÉDICO");
         System.out.println("3. SAIR");
     }
 
+    //////////// MENU PACIENTE ///////////
     public static void MenuPaciente() {
         System.out.println("=== MENU PACIENTE ===");
         System.out.println("1. EDITAR USUÁRIO");
@@ -36,6 +33,7 @@ public class Teste {
         System.out.println("7. SAIR");
     }
 
+    //////////// MENU MÉDICO ///////////
     public static void MenuMedico() {
         System.out.println("=== MENU MÉDICO ===");
         System.out.println("1. EDITAR USUÁRIO");
@@ -45,9 +43,13 @@ public class Teste {
         System.out.println("5. SAIR");
     }
 
+
     public static String cadCpfCliente(){
         String cpf;
         boolean cpfValido;
+
+
+        /////////// DIGITE CPF ////////////
         do {
             cpfValido = true;
             System.out.println("Digite o CPF (apenas números): ");
@@ -68,6 +70,7 @@ public class Teste {
     public static String[] cadEditCliente(){
         String nome, senha, email;
 
+        ////////////// DIGITE NOME /////////////
         do {
             System.out.println("Digite o nome completo: ");
             nome = scanner.nextLine();
@@ -76,7 +79,7 @@ public class Teste {
             }
         } while (nome.matches(".*\\d.*"));
 
-
+        //////// DIGITE SENHA ///////////
         boolean senhaValida;
         do {
             senhaValida = true;
@@ -92,6 +95,8 @@ public class Teste {
             }
         } while (!senhaValida);
 
+
+        ////////////// DIGITE EMAIL ////////////
         boolean emailValido;
         do {
             emailValido = true;
@@ -120,7 +125,7 @@ public class Teste {
         Paciente paciente = new Paciente();
         Agenda agendaPaciente = new Agenda();
 
-        //----------------------
+        //----------------------//
         // cadastrar como medico ou usuario
         boolean cadastroUnicoMed = false, cadastroUnicoPac = false;
         int opCadastro;
@@ -144,6 +149,7 @@ public class Teste {
                 cpf = cadCpfCliente();
 
                 paciente.cadastroCliente(nome, email, senha, cpf, agendaPaciente);
+
             } //CADASTRO MÉDICO
             else if (opCadastro == 2 && !cadastroUnicoMed) {
                 cadastroUnicoMed = true;
@@ -174,7 +180,7 @@ public class Teste {
                         opPaciente = scanner.nextInt();
 
                         switch (opPaciente) {
-                            case 1:
+                            case 1:                ////// EDITAR USUÁRIO //////
                                 System.out.println("=== EDITAR USUÁRIO SELECIONADO ===");
 
                                 scanner.nextLine(); //debuffer
@@ -187,6 +193,7 @@ public class Teste {
                                 paciente.alterarCliente(nome, senha, email);
                                 break;
 
+                                ////////////// DICA DE TELECONSULTA /////////
                             case 2:
                                 System.out.println("Dica de teleconsulta selecionado:");
 
@@ -199,7 +206,7 @@ public class Teste {
                                 System.out.println("Verique se o horário e a data de sua consulta estão corretos");
                                 break;
 
-                            case 3:
+                            case 3:    ////////// DADOS ///////////
                                 System.out.println("=== MEUS DADOS ===");
                                 System.out.println(paciente.apresentarDados());
                                 break;
@@ -208,7 +215,7 @@ public class Teste {
                                 agendaPaciente.mostrarConsultas();
                                 break;
 
-                            case 5:
+                            case 5:     ///////// PESQUISA SATISFAÇÃO ////////
                                 Feedback feedback = new Feedback();
                                 TipoAvaliacaoEnum avaliacaoEnum;
                                 paciente.mostrarDadosFeedback();
@@ -244,12 +251,14 @@ public class Teste {
 
                                 break;
 
-                            case 6:
+
+                            case 6:      //////// AJUDA ///////
                                 System.out.println("=== PRECISO DE AJUDA ===");
                                 System.out.println("Para qualquer dúvida consulte a ouvidoria do Hospital das Clinicas : ouvidoria.hc@hc.fm.usp.br");
                                 break;
 
-                            case 7:
+
+                            case 7:     ///////// SAIR MENU PACIENTE /////////
                                 System.out.println("=== SAINDO DO MENU PACIENTE ===");
                                 break;
 
@@ -269,8 +278,9 @@ public class Teste {
 
                         opMedico = scanner.nextInt();
 
+
                         switch (opMedico) {
-                            case 1:
+                            case 1:            /////////// EDITAR MÉDICO /////////
                                 System.out.println("=== EDITAR MÉDICO SELECIONADO ===");
 
                                 scanner.nextLine(); //debuffer
@@ -290,9 +300,8 @@ public class Teste {
                                 String StringDia, StringMes, StringHora, StringMin;
                                 int dia = 0, mes = 0, hora = 0, min = 0;
 
-                                boolean dataValido;
-
                                 scanner.nextLine();
+
 
                                 System.out.println("Digite o nome da consulta: ");
                                 String nomeConsulta = scanner.nextLine();
